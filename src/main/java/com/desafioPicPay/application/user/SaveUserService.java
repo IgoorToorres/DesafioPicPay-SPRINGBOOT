@@ -6,7 +6,9 @@ import com.desafioPicPay.application.user.security.PasswordHasher;
 import com.desafioPicPay.domain.repository.UserRepository;
 import com.desafioPicPay.domain.user.User;
 import com.desafioPicPay.error.DomainException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SaveUserService {
     private final UserRepository userRepository;
     private final PasswordHasher passwordHasher;

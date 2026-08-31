@@ -2,10 +2,12 @@ package com.desafioPicPay.infrastructure.persistence;
 
 import com.desafioPicPay.domain.repository.UserRepository;
 import com.desafioPicPay.domain.user.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class UserRepositoryImpl implements UserRepository {
     private final JpaUserRepository jpaUserRepository;
 
