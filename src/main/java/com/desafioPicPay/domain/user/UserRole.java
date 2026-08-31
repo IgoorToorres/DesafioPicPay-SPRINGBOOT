@@ -1,4 +1,4 @@
-package com.desafioPicPay.domain;
+package com.desafioPicPay.domain.user;
 
 public enum UserRole {
     COMMON,

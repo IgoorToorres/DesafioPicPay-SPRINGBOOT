@@ -1,4 +1,4 @@
-package com.desafioPicPay.domain;
+package com.desafioPicPay.domain.user;
 
 import com.desafioPicPay.error.DomainException;
 import jakarta.persistence.*;
