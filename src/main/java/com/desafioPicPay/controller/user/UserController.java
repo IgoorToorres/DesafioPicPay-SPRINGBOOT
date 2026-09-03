@@ -58,10 +58,12 @@ public class UserController {
                                     name = "Usuário comum",
                                     value = """
                                             {
-                                              "fullName": "Maria da Silva",
+                                              "firstName": "Maria",
+                                              "lastName": "da Silva",
                                               "email": "maria@email.com",
                                               "document": "12345678901",
                                               "password": "senhaSegura123",
+                                              "balance": 1000.00,
                                               "role": "COMMON"
                                             }
                                             """
@@ -71,10 +73,12 @@ public class UserController {
             @Valid @RequestBody UserRequest userRequest
     ){
         RegisterUserCommand command = new RegisterUserCommand(
-                userRequest.fullName(),
+                userRequest.firstName(),
+                userRequest.lastName(),
                 userRequest.email(),
                 userRequest.document(),
                 userRequest.password(),
+                userRequest.balance(),
                 userRequest.role()
         );
 

@@ -4,6 +4,7 @@ import com.desafioPicPay.error.DomainException;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Data
@@ -15,8 +16,11 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Column(name = "fullName", nullable = false)
-    private String fullName;
+    @Column(name = "firstName", nullable = false)
+    private String firstName;
+
+    @Column(name = "lastName", nullable = false)
+    private String lastName;
 
     @Column(name = "cpf", nullable = false, updatable = false, unique = true)
     private String cpf;
@@ -27,6 +31,9 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "balance", nullable = false)
+    private BigDecimal balance;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRole role;
@@ -34,24 +41,40 @@ public class User {
     protected User(){}
 
     public User(
-            String fullName, String cpf, String email, String password, UserRole role
+            String firstName,
+            String lastName,
+            String cpf,
+            String email,
+            String password,
+            BigDecimal balance,
+            UserRole role
     ){
-        validateNullString(fullName, "Nome completo é obrigatório");
+        validateNullString(firstName, "nome é obrigatório");
+        validateNullString(lastName, "nome completo é obrigatório");
         validateNullString(cpf, "cpf é obrigatório");
         validateNullString(email, "email é obrigatório");
         validateNullString(password, "senha é obrigatória");
+        validateBalance(balance);
 
         this.id = UUID.randomUUID();
-        this.fullName = fullName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.cpf = cpf;
         this.email = email;
         this.password = password;
+        this.balance = balance;
         this.role = role;
     }
 
-    public void validateNullString(String value, String message){
+    private void validateNullString(String value, String message){
         if(value == null || value.isBlank()){
             throw new DomainException(message);
+        }
+    }
+
+    private void validateBalance(BigDecimal balance){
+        if(balance.compareTo(BigDecimal.ZERO) < 0){
+            throw new DomainException("valor em conta deve ser positivo");
         }
     }
 }

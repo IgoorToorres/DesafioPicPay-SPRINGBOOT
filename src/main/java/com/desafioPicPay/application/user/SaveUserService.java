@@ -29,10 +29,12 @@ public class SaveUserService {
         String passwordHashed = passwordHasher.hash(command.password());
 
         User user = new User(
-                command.fullName(),
+                command.firstName(),
+                command.lastName(),
                 command.cpf(),
                 command.email(),
                 passwordHashed,
+                command.balance(),
                 command.role()
         );
 
@@ -44,9 +46,11 @@ public class SaveUserService {
     private UserResponse toResponse(User user){
         return new UserResponse(
                 user.getId(),
-                user.getFullName(),
+                user.getFirstName(),
+                user.getLastName(),
                 user.getCpf(),
                 user.getEmail(),
+                user.getBalance(),
                 user.getRole()
         );
     }
