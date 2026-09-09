@@ -72,9 +72,33 @@ public class User {
         }
     }
 
-    private void validateBalance(BigDecimal balance){
-        if(balance.compareTo(BigDecimal.ZERO) < 0){
-            throw new DomainException("valor em conta deve ser positivo");
+    private void validateBalance(BigDecimal balance) {
+        if (balance == null) {
+            throw new DomainException("Saldo é obrigatório");
+        }
+
+        if (balance.compareTo(BigDecimal.ZERO) < 0) {
+            throw new DomainException("Saldo não pode ser negativo");
+        }
+    }
+
+    public void credit(BigDecimal amount){
+        validatePositiveAmount(amount);
+        this.balance = this.balance.add(amount);
+    }
+
+    public void debit(BigDecimal amount){
+        validatePositiveAmount(amount);
+        if(balance.compareTo(amount) < 0){
+            throw new DomainException("saldo insuficiente");
+        }
+
+        this.balance = balance.subtract(amount);
+    }
+
+    private void validatePositiveAmount(BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new DomainException("O valor deve ser maior que zero");
         }
     }
 }
