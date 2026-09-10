@@ -7,6 +7,7 @@ import com.desafioPicPay.domain.repository.WalletTransactionRepository;
 import com.desafioPicPay.domain.transaction.WalletTransaction;
 import com.desafioPicPay.domain.user.User;
 import com.desafioPicPay.error.DomainException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,7 @@ public class WithdrawService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public WithdrawResponse execute(WithdrawCommand command){
         User user = userRepository.findById(command.userId())
                 .orElseThrow(() -> new DomainException("usuario nao encontrado"));
